@@ -5,29 +5,23 @@ import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
-@Table(name = "homework", schema = "services")
+@Table(name = "homeworkdone")
 @Getter
 @Setter
-public class Homework {
+public class HomeworkDone {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(updatable = false, nullable = false)
     private String id;
 
-    @Column
-    private String title;
+    @ManyToOne(targetEntity = Homework.class)
+    @JoinColumn(name = "homeworkid", foreignKey = @ForeignKey(name = "fk_homeworkid"))
+    private Homework homework;
 
-    @Column
-    private String description;
-
-    @Column
-    private Date validTill;
-
-    @ManyToOne(targetEntity = LessonSubstitutes.class)
-    @JoinColumn(name = "lessonid", foreignKey = @ForeignKey(name = "fk_lessonid"))
-    private LessonSubstitutes lesson;
+    @ManyToOne(targetEntity = User.class)
+    @JoinColumn(name = "userid", foreignKey = @ForeignKey(name = "fk_userid"))
+    private User user;
 }

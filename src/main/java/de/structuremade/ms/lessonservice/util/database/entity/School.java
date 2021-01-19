@@ -29,10 +29,23 @@ public class School {
     private String email;
 
     @OneToMany(targetEntity = Role.class, orphanRemoval = true)
-    @JoinColumn(name = "school", foreignKey = @ForeignKey(name = "fk_schoolid"))
-    private List<Role> roles = new ArrayList<>();
+    @JoinColumn(name = "schoolid", foreignKey = @ForeignKey(name = "fk_schoolid"))
+    private List<Role> roles;
 
     @OneToMany(targetEntity = Lessons.class, orphanRemoval = true)
-    @JoinColumn(name = "school", foreignKey = @ForeignKey(name = "fk_schoolid"))
-    private List<Lessons> lessons = new ArrayList<>();
+    @JoinColumn(name = "schoolid", foreignKey = @ForeignKey(name = "fk_schoolid"))
+    private List<Lessons> lessons;
+
+    @OneToMany(targetEntity = Holidays.class)
+    @JoinColumn(name = "schoolid")
+    private List<Holidays> holidays;
+
+    @OneToMany(targetEntity = Schoolsettings.class)
+    @JoinColumn(name = "schoolid")
+    private List<Schoolsettings> schoolSettings;
+
+    @OneToMany(targetEntity = LessonSubstitutes.class)
+    @JoinColumn(name = "schoolid")
+    List<LessonSubstitutes> lessonSubstitutes;
+
 }

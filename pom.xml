@@ -53,6 +53,11 @@
             <version>2.8.6</version>
         </dependency>
         <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.10.9</version>
+        </dependency>
+        <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
@@ -66,6 +71,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
     </dependencies>
 
@@ -96,6 +105,7 @@
                 </configuration>
             </plugin>
         </plugins>
+        <finalName>docker-lessonservice</finalName>
     </build>
 
     <repositories>

@@ -1,53 +1,60 @@
 package de.structuremade.ms.lessonservice.util.database.entity;
 
-import lombok.AllArgsConstructor;
+
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "lessons", schema = "services", indexes = {
-        @Index(name = "id_lessonrolesid", columnList = "id", unique = true)})
+@Table(name = "Lessons")
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 public class Lessons {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(updatable = false, nullable = false)
     private String id;
-    @Column
-    private String name;
-
-    @Column(length = 3)
-    private int state;
-
-    @Column
-    private String startOfLesson;
-
-    @Column
-    private String endOfLesson;
 
     @Column
     private String day;
 
-    @OneToOne
-    @JoinColumn(name = "userid", foreignKey = @ForeignKey(name = "fk_userid"))
-    private User user;
+    @Column
+    private String room;
 
-    @ManyToOne
+    @Column
+    private int state;
+
+    @ManyToOne(targetEntity = User.class)
+    @JoinColumn(name = "teacherId", foreignKey = @ForeignKey(name = "fk_teacherid"))
+    private User teacher;
+
+    @ManyToOne(targetEntity = Lessonsettings.class)
+    @JoinColumn(name = "settingsid", foreignKey = @ForeignKey(name = "fk_lessonsettings"))
+    private Lessonsettings settings;
+
+    @ManyToOne(targetEntity = School.class)
     @JoinColumn(name = "schoolid", foreignKey = @ForeignKey(name = "fk_schoolid"))
     private School school;
 
-    @OneToMany(targetEntity = Homework.class,orphanRemoval = false)
-    @JoinColumn(name = "lesson", foreignKey = @ForeignKey(name = "fklesson"))
-    private List<Homework> homework = new ArrayList<>();
+    @ManyToOne(targetEntity = LessonRoles.class)
+    @JoinColumn(name = "lessonroleid", foreignKey = @ForeignKey(name = "fk_lessonroleid"))
+    private LessonRoles lessonRoles;
+
+    @ManyToMany(targetEntity = TimeTableTimes.class, fetch = FetchType.LAZY)
+    @JoinTable(name = "lessontimes", schema = "services", joinColumns = @JoinColumn(name = "lessonid", foreignKey = @ForeignKey(name = "fk_userid"))
+            , inverseJoinColumns = @JoinColumn(name = "timeid", foreignKey = @ForeignKey(name = "fk_timeid")))
+    private List<TimeTableTimes> times;
+
+    @OneToMany(targetEntity = Homework.class)
+    @JoinColumn(name = "lesson", foreignKey = @ForeignKey(name = "fk_lessonrole"))
+    private List<Homework> homework;
+
+    @OneToMany(targetEntity = LessonSubstitutes.class)
+    @JoinColumn(name = "lessonid")
+    private List<LessonSubstitutes> substitutes;
 }

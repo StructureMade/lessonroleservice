@@ -24,7 +24,7 @@ public class Role {
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "school", foreignKey = @ForeignKey(name = "fk_schoolid"))
+    @JoinColumn(name = "schoolid")
     private School school;
 
     @ManyToMany(targetEntity = Permissions.class, fetch = FetchType.LAZY)

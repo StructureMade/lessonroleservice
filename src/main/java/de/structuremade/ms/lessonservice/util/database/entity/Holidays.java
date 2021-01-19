@@ -8,10 +8,10 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "homework", schema = "services")
+@Table
 @Getter
 @Setter
-public class Homework {
+public class Holidays {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
@@ -19,15 +19,15 @@ public class Homework {
     private String id;
 
     @Column
-    private String title;
+    private String name;
 
     @Column
-    private String description;
+    private Date begin;
 
     @Column
-    private Date validTill;
+    private Date end;
 
-    @ManyToOne(targetEntity = LessonSubstitutes.class)
-    @JoinColumn(name = "lessonid", foreignKey = @ForeignKey(name = "fk_lessonid"))
-    private LessonSubstitutes lesson;
+    @ManyToOne
+    @JoinColumn(name = "schoolid", foreignKey = @ForeignKey(name = "fk_schoolid"))
+    private School school;
 }

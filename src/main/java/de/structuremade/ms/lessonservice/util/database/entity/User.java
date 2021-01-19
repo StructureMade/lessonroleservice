@@ -36,6 +36,9 @@ public class User {
     @Column
     private String password;
 
+    @Column
+    private String abbreviation;
+
     @Column(nullable = false)
     private Date creationDate;
 
@@ -48,7 +51,7 @@ public class User {
     @Column
     private String lastSchool;
 
-    @ManyToMany(targetEntity =School.class, fetch = FetchType.LAZY)
+    @ManyToMany(targetEntity = School.class, fetch = FetchType.LAZY)
     @JoinTable(name = "userschools", schema = "services", joinColumns = @JoinColumn(name = "userid", foreignKey = @ForeignKey(name = "fk_userid"))
             , inverseJoinColumns = @JoinColumn(name = "schoolid", foreignKey = @ForeignKey(name = "fk_schoolid")))
     private List<School> schools = new ArrayList<>();
@@ -58,8 +61,9 @@ public class User {
             , inverseJoinColumns = @JoinColumn(name = "roleid", foreignKey = @ForeignKey(name = "fk_roleid")))
     private List<Role> roles = new ArrayList<>();
 
-   @ManyToMany(targetEntity = Lessons.class)
-    @JoinTable(name = "userlessons", schema = "services", joinColumns = @JoinColumn(name = "userid", foreignKey = @ForeignKey(name = "fk_userid"))
-            , inverseJoinColumns = @JoinColumn(name = "lessonid", foreignKey = @ForeignKey(name = "fk_lessonid")))
-    private List<Lessons> lessonRoles = new ArrayList<>();
+    @ManyToMany(targetEntity = LessonRoles.class)
+    @JoinTable(name = "userlessonroles", schema = "services", joinColumns = @JoinColumn(name = "userid", foreignKey = @ForeignKey(name = "fk_userid"))
+            , inverseJoinColumns = @JoinColumn(name = "lessonroleid", foreignKey = @ForeignKey(name = "fk_lessonroleid")))
+    private List<LessonRoles> lessonRoles;
+
 }

@@ -71,7 +71,7 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
         String error =
                 ex.getName() + " should be of type " + ex.getRequiredType().getName();
 
-       ApiError apiError =
+        ApiError apiError =
                 new ApiError(HttpStatus.BAD_REQUEST, ex.getMessage());
         return new ResponseEntity<Object>(
                 apiError, new HttpHeaders(), apiError.getHttpStatus());

@@ -1,6 +1,6 @@
 spring:
   application:
-    name: USERSERVICE
+    name: LESSONSERVICE
   datasource:
     username: postgres
     password: lol
