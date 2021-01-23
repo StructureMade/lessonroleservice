@@ -21,4 +21,4 @@ eureka:
     service-url:
       defaultZone: https://eureka.structuremade.de/eureka/
 server:
-  port: 8080
+  port: 80

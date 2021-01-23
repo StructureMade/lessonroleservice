@@ -66,4 +66,8 @@ public class User {
             , inverseJoinColumns = @JoinColumn(name = "lessonroleid", foreignKey = @ForeignKey(name = "fk_lessonroleid")))
     private List<LessonRoles> lessonRoles;
 
+    @OneToMany(targetEntity = LessonRoles.class)
+    @JoinColumn(name = "teacher")
+    private List<LessonRoles> lessons;
+
 }

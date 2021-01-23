@@ -2,6 +2,7 @@ package de.structuremade.ms.lessonservice.api.service;
 
 import de.structuremade.ms.lessonservice.api.json.CreateLessonJson;
 import de.structuremade.ms.lessonservice.api.json.GetLessonJson;
+import de.structuremade.ms.lessonservice.api.json.SetLessonsJson;
 import de.structuremade.ms.lessonservice.api.json.answer.GetMyLessonsJson;
 import de.structuremade.ms.lessonservice.api.json.answer.LessonDays.LessonDays;
 import de.structuremade.ms.lessonservice.api.json.answer.LessonDays.Times;
@@ -16,6 +17,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PutMapping;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -97,6 +100,26 @@ public class LessonService {
         } catch (Exception e) {
             LOGGER.error("Create Lesson failed", e.fillInStackTrace());
             e.printStackTrace();
+            return 1;
+        }
+    }
+
+    public int setToUser(SetLessonsJson slj){
+        User user;
+        try {
+            if(slj.getLesson() == null && slj.getLessons() == null || slj.getLesson() != null && slj.getLessons() != null) {
+                return 2;
+            }
+            LOGGER.info("Get Lesson and User");
+            user = userRepo.getOne(slj.getUser());
+            List<LessonRoles> lessonRoles = user.getLessonRoles();
+            lessonRoles.add(lessonRolesRepo.getOne(slj.getLesson()));
+            LOGGER.info("Set lesson to user");
+            user.setLessonRoles(lessonRoles);
+            userRepo.save(user);
+            return 0;
+        }catch (Exception e){
+            LOGGER.error("Couldn't set Lesson to User", e.fillInStackTrace());
             return 1;
         }
     }

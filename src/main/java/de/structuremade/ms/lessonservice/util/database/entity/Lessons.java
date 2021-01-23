@@ -30,7 +30,7 @@ public class Lessons {
     private int state;
 
     @ManyToOne(targetEntity = User.class)
-    @JoinColumn(name = "teacherId", foreignKey = @ForeignKey(name = "fk_teacherid"))
+    @JoinColumn(name = "teacher", foreignKey = @ForeignKey(name = "fk_teacherid"))
     private User teacher;
 
     @ManyToOne(targetEntity = Lessonsettings.class)

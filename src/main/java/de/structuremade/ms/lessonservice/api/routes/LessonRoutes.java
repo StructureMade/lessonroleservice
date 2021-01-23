@@ -3,6 +3,7 @@ package de.structuremade.ms.lessonservice.api.routes;
 import com.google.gson.Gson;
 import de.structuremade.ms.lessonservice.api.json.CreateLessonJson;
 import de.structuremade.ms.lessonservice.api.json.GetLessonJson;
+import de.structuremade.ms.lessonservice.api.json.SetLessonsJson;
 import de.structuremade.ms.lessonservice.api.json.answer.GetMyLessonsJson;
 import de.structuremade.ms.lessonservice.api.service.LessonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,8 @@ public class LessonRoutes {
     @Autowired
     LessonService service;
 
-    @PostMapping("create")
+    @CrossOrigin
+    @PostMapping("/create")
     public void createLesson(@RequestBody CreateLessonJson lessonJson, HttpServletRequest request, HttpServletResponse response) {
         switch (service.create(lessonJson, request.getHeader("Authorization").substring(7))) {
             case 0 -> response.setStatus(HttpStatus.CREATED.value());
@@ -28,6 +30,7 @@ public class LessonRoutes {
         }
     }
 
+    @CrossOrigin
     @GetMapping("/getmy")
     public Object getAllMyLessons(@RequestBody GetLessonJson lessonJson, HttpServletRequest request, HttpServletResponse response) {
         Gson gson = new Gson();
@@ -45,4 +48,16 @@ public class LessonRoutes {
             return null;
         }
     }
+
+    @CrossOrigin
+    @PutMapping("/set")
+    public void setLesson(@RequestBody SetLessonsJson setLessonsJson, HttpServletResponse response){
+        switch (service.setToUser(setLessonsJson)){
+            case 0 -> response.setStatus(HttpStatus.OK.value());
+            case 1 -> response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+            case 2 -> response.setStatus(HttpStatus.BAD_REQUEST.value());
+        }
+    }
+
+
 }

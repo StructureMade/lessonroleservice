@@ -22,6 +22,10 @@ public class LessonRoles {
     @Column
     private String name;
 
+    @ManyToOne(targetEntity = User.class)
+    @JoinColumn(name = "teacher", foreignKey = @ForeignKey(name = "fk_teacherid"))
+    private User teacher;
+
     @ManyToOne
     @JoinColumn(name = "schoolid", foreignKey = @ForeignKey(name = "fk_schoolid"))
     private School school;
