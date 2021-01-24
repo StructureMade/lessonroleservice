@@ -32,7 +32,6 @@ public class LessonService {
     JWTUtil jwtUtil;
     @Autowired
     Converter converter;
-    SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
 
 
     public int create(CreateLessonJson lessonJson, String jwt){
