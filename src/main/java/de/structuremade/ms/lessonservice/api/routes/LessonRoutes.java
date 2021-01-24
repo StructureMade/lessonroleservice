@@ -1,10 +1,7 @@
 package de.structuremade.ms.lessonservice.api.routes;
 
-import com.google.gson.Gson;
 import de.structuremade.ms.lessonservice.api.json.CreateLessonJson;
-import de.structuremade.ms.lessonservice.api.json.GetLessonJson;
 import de.structuremade.ms.lessonservice.api.json.SetLessonsJson;
-import de.structuremade.ms.lessonservice.api.json.answer.GetMyLessonsJson;
 import de.structuremade.ms.lessonservice.api.service.LessonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,7 +27,7 @@ public class LessonRoutes {
         }
     }
 
-    @CrossOrigin
+    /*@CrossOrigin
     @GetMapping("/getmy")
     public Object getAllMyLessons(@RequestBody GetLessonJson lessonJson, HttpServletRequest request, HttpServletResponse response) {
         Gson gson = new Gson();
@@ -47,7 +44,7 @@ public class LessonRoutes {
             response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
             return null;
         }
-    }
+    }*/
 
     @CrossOrigin
     @PutMapping("/set")
