@@ -23,5 +23,8 @@ public class Permissions {
     private String name;
 
     @Column
+    private boolean topicperm;
+
+    @Column
     private boolean masterPerms;
 }

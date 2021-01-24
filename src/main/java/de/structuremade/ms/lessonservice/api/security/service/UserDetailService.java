@@ -2,10 +2,6 @@ package de.structuremade.ms.lessonservice.api.security.service;
 
 
 import de.structuremade.ms.lessonservice.util.JWTUtil;
-import de.structuremade.ms.lessonservice.util.database.entity.Permissions;
-import de.structuremade.ms.lessonservice.util.database.entity.Role;
-import de.structuremade.ms.lessonservice.util.database.entity.User;
-import de.structuremade.ms.lessonservice.util.database.repo.PermissionsRepo;
 import de.structuremade.ms.lessonservice.util.database.repo.RoleRepo;
 import de.structuremade.ms.lessonservice.util.database.repo.SchoolRepo;
 import de.structuremade.ms.lessonservice.util.database.repo.UserRepo;

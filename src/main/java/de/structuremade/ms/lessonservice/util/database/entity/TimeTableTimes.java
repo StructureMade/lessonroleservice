@@ -19,13 +19,16 @@ public class TimeTableTimes {
     private String id;
 
     @Column
+    private String name;
+
+    @Column
     private Time starttime;
 
     @Column
     private Time endtime;
 
     @ManyToOne(targetEntity = School.class)
-    @JoinColumn(name = "schoolid")
+    @JoinColumn(name = "school")
     private School school;
 
 

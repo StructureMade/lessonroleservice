@@ -1,8 +1,5 @@
 package de.structuremade.ms.lessonservice.api.json.answer.LessonDays;
 
-import de.structuremade.ms.lessonservice.util.database.entity.LessonSubstitutes;
-import de.structuremade.ms.lessonservice.util.database.entity.Lessons;
-import de.structuremade.ms.lessonservice.util.database.entity.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

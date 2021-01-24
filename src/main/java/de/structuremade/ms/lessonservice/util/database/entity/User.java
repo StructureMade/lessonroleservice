@@ -51,23 +51,27 @@ public class User {
     @Column
     private String lastSchool;
 
-    @ManyToMany(targetEntity = School.class, fetch = FetchType.LAZY)
+    @ManyToMany(targetEntity = School.class)
     @JoinTable(name = "userschools", schema = "services", joinColumns = @JoinColumn(name = "userid", foreignKey = @ForeignKey(name = "fk_userid"))
-            , inverseJoinColumns = @JoinColumn(name = "schoolid", foreignKey = @ForeignKey(name = "fk_schoolid")))
+            , inverseJoinColumns = @JoinColumn(name = "school", foreignKey = @ForeignKey(name = "fk_school")))
     private List<School> schools = new ArrayList<>();
 
-    @ManyToMany(targetEntity = Role.class, fetch = FetchType.LAZY)
+    @ManyToMany(targetEntity = Role.class)
     @JoinTable(name = "userroles", schema = "services", joinColumns = @JoinColumn(name = "userid", foreignKey = @ForeignKey(name = "fk_userid"))
-            , inverseJoinColumns = @JoinColumn(name = "roleid", foreignKey = @ForeignKey(name = "fk_roleid")))
+            , inverseJoinColumns = @JoinColumn(name = "role", foreignKey = @ForeignKey(name = "fk_role")))
     private List<Role> roles = new ArrayList<>();
 
     @ManyToMany(targetEntity = LessonRoles.class)
     @JoinTable(name = "userlessonroles", schema = "services", joinColumns = @JoinColumn(name = "userid", foreignKey = @ForeignKey(name = "fk_userid"))
-            , inverseJoinColumns = @JoinColumn(name = "lessonroleid", foreignKey = @ForeignKey(name = "fk_lessonroleid")))
+            , inverseJoinColumns = @JoinColumn(name = "lessonrole", foreignKey = @ForeignKey(name = "fk_lessonrole")))
     private List<LessonRoles> lessonRoles;
 
-    @OneToMany(targetEntity = LessonRoles.class)
+    @ManyToMany(targetEntity = User.class)
+    @JoinTable(name = "userparents", schema = "services", joinColumns = @JoinColumn(name = "parent", foreignKey = @ForeignKey(name = "fk_parent"))
+            , inverseJoinColumns = @JoinColumn(name = "student", foreignKey = @ForeignKey(name = "fk_student")))
+    private List<User> parents;
+
+    @OneToMany(targetEntity =LessonRoles.class)
     @JoinColumn(name = "teacher")
     private List<LessonRoles> lessons;
-
 }

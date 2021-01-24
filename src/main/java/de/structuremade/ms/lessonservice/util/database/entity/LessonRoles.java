@@ -4,9 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
-import java.util.List;
 import javax.persistence.*;
-
+import java.util.List;
 
 @Entity
 @Table(name = "lessonroles")
@@ -27,10 +26,7 @@ public class LessonRoles {
     private User teacher;
 
     @ManyToOne
-    @JoinColumn(name = "schoolid", foreignKey = @ForeignKey(name = "fk_schoolid"))
+    @JoinColumn(name = "school", foreignKey = @ForeignKey(name = "fk_schoolid"))
     private School school;
 
-    @OneToMany(targetEntity = Lessons.class)
-    @JoinColumn(name = "lessonroleid")
-    private List<Lessons> lessons;
 }

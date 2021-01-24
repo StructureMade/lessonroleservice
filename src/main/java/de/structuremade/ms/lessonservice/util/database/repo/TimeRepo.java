@@ -4,7 +4,6 @@ import de.structuremade.ms.lessonservice.util.database.entity.School;
 import de.structuremade.ms.lessonservice.util.database.entity.TimeTableTimes;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.sql.Time;
 import java.util.List;
 
 public interface TimeRepo extends JpaRepository<TimeTableTimes, String> {
