@@ -71,6 +71,11 @@ public class User {
             , inverseJoinColumns = @JoinColumn(name = "student", foreignKey = @ForeignKey(name = "fk_student")))
     private List<User> parents;
 
+    @ManyToMany(targetEntity = User.class)
+    @JoinTable(name = "userparents", schema = "services", joinColumns = @JoinColumn(name = "parent", foreignKey = @ForeignKey(name = "fk_parent"))
+            , inverseJoinColumns = @JoinColumn(name = "student", foreignKey = @ForeignKey(name = "fk_student")))
+    private List<User> childrens;
+
     @OneToMany(targetEntity =LessonRoles.class)
     @JoinColumn(name = "teacher")
     private List<LessonRoles> lessons;

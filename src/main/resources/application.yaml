@@ -9,8 +9,6 @@ spring:
   jpa:
     show-sql: on
     generate-ddl: on
-    hibernate:
-      ddl-auto: update
     properties:
       hibernate:
         default_schema: services
