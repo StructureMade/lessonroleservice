@@ -66,7 +66,7 @@ public class LessonService {
         }
     }
 
-    public int setToUser(SetLessonsJson slj){
+    public int setToUser(SetLessonsJson slj, String jwt){
         User user;
         try {
             if(slj.getLesson() == null && slj.getLessons() == null || slj.getLesson() != null && slj.getLessons() != null) {
@@ -74,6 +74,7 @@ public class LessonService {
             }
             LOGGER.info("Get Lesson and User");
             user = userRepo.getOne(slj.getUser());
+            if (user.getSchools().get(0).getId().equals(jwtUtil.extractSpecialClaim(jwt, "schoolid"))) return 3;
             List<LessonRoles> lessonRoles = user.getLessonRoles();
             lessonRoles.add(lessonRolesRepo.getOne(slj.getLesson()));
             LOGGER.info("Set lesson to user");

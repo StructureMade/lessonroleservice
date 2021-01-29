@@ -32,7 +32,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf()
+        http.httpBasic()
                 .disable()
                 .authorizeRequests()
                 .antMatchers("/coreapi/v1/user/login",
