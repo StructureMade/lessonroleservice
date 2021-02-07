@@ -1,6 +1,6 @@
 spring:
   application:
-    name: LESSONSERVICE
+    name: LESSSONROLESERVICE
   datasource:
     username: postgres
     password: lol
@@ -9,13 +9,15 @@ spring:
   jpa:
     show-sql: on
     generate-ddl: on
+    hibernate:
+      ddl-auto: validate
     properties:
       hibernate:
         default_schema: services
 eureka:
   client:
     fetch-registry: false
-    register-with-eureka: false
+    register-with-eureka: true
     service-url:
       defaultZone: https://eureka.structuremade.de/eureka/
 server:

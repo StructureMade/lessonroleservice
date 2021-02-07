@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @RestController
-@RequestMapping("/service/lesson")
+@RequestMapping("/service/lessonrole")
 public class LessonRoutes {
 
     @Autowired
@@ -56,6 +56,8 @@ public class LessonRoutes {
             case 3 -> response.setStatus(HttpStatus.UNAUTHORIZED.value());
         }
     }
+
+
 
 
 }

@@ -32,16 +32,8 @@ public class School {
     @JoinColumn(name = "school", foreignKey = @ForeignKey(name = "fk_school"))
     private List<Role> roles = new ArrayList<>();
 
-    @OneToMany(targetEntity = de.structuremade.ms.initializer.database.entity.LessonSubstitutes.class, orphanRemoval = true)
+    @OneToMany(targetEntity = TimeTableTimes.class, orphanRemoval = true)
     @JoinColumn(name = "school", foreignKey = @ForeignKey(name = "fk_school"))
-    private List<de.structuremade.ms.initializer.database.entity.LessonSubstitutes> lessons = new ArrayList<>();
-
-    @OneToMany(targetEntity = de.structuremade.ms.initializer.database.entity.TimeTableTimes.class, orphanRemoval = true)
-    @JoinColumn(name = "school", foreignKey = @ForeignKey(name = "fk_school"))
-    private List<de.structuremade.ms.initializer.database.entity.TimeTableTimes> times = new ArrayList<>();
-
-    @OneToMany(targetEntity = Holidays.class)
-    @JoinColumn(name = "school")
-    private List<Holidays> holidays;
+    private List<TimeTableTimes> times = new ArrayList<>();
 
 }

@@ -25,7 +25,7 @@ public class Role {
 
     @ManyToOne
     @JoinColumn(name = "school")
-    private de.structuremade.ms.initializer.database.entity.School school;
+    private School school;
 
     @ManyToMany(targetEntity = Permissions.class, fetch = FetchType.LAZY)
     @JoinTable(name = "rolepermissions", schema = "services",
