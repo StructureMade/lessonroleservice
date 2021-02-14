@@ -11,8 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 
@@ -42,7 +40,7 @@ public class LessonService {
             LOGGER.info("Initialize Lesson Entity");
             lr.setName(lessonJson.getName());
             try {
-                if (!jwtUtil.isTokenExpired(jwt)) {
+                if (jwtUtil.isTokenExpired(jwt)) {
                     LOGGER.info("JWT was expired");
                     return 2;
                 }

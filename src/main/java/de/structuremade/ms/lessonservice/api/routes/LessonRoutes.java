@@ -23,7 +23,7 @@ public class LessonRoutes {
         switch (service.create(lessonJson, request.getHeader("Authorization").substring(7))) {
             case 0 -> response.setStatus(HttpStatus.CREATED.value());
             case 1 -> response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
-            case 2 -> response.setStatus(HttpStatus.BAD_REQUEST.value());
+            case 2 -> response.setStatus(HttpStatus.UNAUTHORIZED.value());
         }
     }
 
