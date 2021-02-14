@@ -67,14 +67,23 @@ public class LessonService {
     public int setToUser(SetLessonsJson slj, String jwt){
         User user;
         try {
+            if (jwtUtil.isTokenExpired(jwt)) {
+                LOGGER.info("JWT was expired");
+                return 3;
+            }
             if(slj.getLesson() == null && slj.getLessons() == null || slj.getLesson() != null && slj.getLessons() != null) {
                 return 2;
             }
             LOGGER.info("Get Lesson and User");
             user = userRepo.getOne(slj.getUser());
-            if (user.getSchools().get(0).getId().equals(jwtUtil.extractSpecialClaim(jwt, "schoolid"))) return 3;
             List<LessonRoles> lessonRoles = user.getLessonRoles();
-            lessonRoles.add(lessonRolesRepo.getOne(slj.getLesson()));
+            if (slj.getLessons() == null) {
+                lessonRoles.add(lessonRolesRepo.getOne(slj.getLesson()));
+            }else {
+                slj.getLessons().forEach(lesson ->{
+                    lessonRoles.add(lessonRolesRepo.getOne(lesson));
+                });
+            }
             LOGGER.info("Set lesson to user");
             user.setLessonRoles(lessonRoles);
             userRepo.save(user);
@@ -84,13 +93,7 @@ public class LessonService {
             return 1;
         }
     }
-
-
 }
-
-
-
-
     /*
     variables
     List<Times> times = new ArrayList<>();
