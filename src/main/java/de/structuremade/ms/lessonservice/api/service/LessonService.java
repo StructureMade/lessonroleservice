@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -58,7 +59,7 @@ public class LessonService {
                 lessonRolesRepo.save(lr);
                 return 0;
             } catch (Exception e) {
-                LOGGER.error("Create Lesson failed", e.fillInStackTrace());
+                LOGGER.error("reate Lesson failed", e.fillInStackTrace());
                 e.printStackTrace();
                 return 1;
             }
@@ -68,27 +69,36 @@ public class LessonService {
         }
     }
 
-    public int setToUser(SetLessonsJson slj, String jwt) {
+    public List<String> setToUser(SetLessonsJson slj, String jwt) {
         User user;
+        List<String> lessonRolesAlreadySet = new ArrayList<>();
+        List<LessonRoles> lessonRolesClass = new ArrayList<>();
         try {
             if (jwtUtil.isTokenExpired(jwt)) {
                 LOGGER.info("JWT was expired");
-                return 3;
+                return new ArrayList<>();
             }
             LOGGER.info("Get Lesson and User");
             user = userRepo.getOne(slj.getUser());
             List<LessonRoles> lessonRoles = user.getLessonRoles();
-            slj.getLessons().forEach(lesson -> {
-                if (lessonRoles.contains(lesson)) {
-                    lessonRoles.add(lessonRolesRepo.getOne(lesson));
-                }});
+            if (user.getUserClass() != null) {
+             lessonRolesClass = user.getUserClass().getLessons();
+            }
+            for (String lesson : slj.getLessons()) {
+                LessonRoles lr = lessonRolesRepo.getOne(lesson);
+                if (!lessonRoles.contains(lr) && !lessonRolesClass.contains(lr)) {
+                    lessonRoles.add(lr);
+                } else {
+                    lessonRolesAlreadySet.add(lr.getName());
+                }
+            }
             LOGGER.info("Set lesson to user");
             user.setLessonRoles(lessonRoles);
             userRepo.save(user);
-            return 0;
+            return lessonRolesAlreadySet;
         } catch (Exception e) {
             LOGGER.error("Couldn't set Lesson to User", e.fillInStackTrace());
-            return 1;
+            return null;
         }
     }
 }

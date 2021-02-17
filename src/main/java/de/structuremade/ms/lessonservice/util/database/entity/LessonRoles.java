@@ -32,4 +32,9 @@ public class LessonRoles {
     @OneToMany(targetEntity = Lessons.class)
     @JoinColumn(name = "lessonrole")
     private List<Lessons> lessons;
+
+    @ManyToMany(targetEntity = Class.class)
+    @JoinTable(name = "classlessons",schema = "services", joinColumns = @JoinColumn(name = "lessonrole", foreignKey = @ForeignKey(name = "fk_lessonrole"))
+            , inverseJoinColumns = @JoinColumn(name = "class", foreignKey = @ForeignKey(name = "fk_class")))
+    private List<Class> classes;
 }
