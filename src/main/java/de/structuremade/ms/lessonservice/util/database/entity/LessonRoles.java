@@ -29,4 +29,7 @@ public class LessonRoles {
     @JoinColumn(name = "school", foreignKey = @ForeignKey(name = "fk_schoolid"))
     private School school;
 
+    @OneToMany(targetEntity = Lessons.class)
+    @JoinColumn(name = "lessonrole")
+    private List<Lessons> lessons;
 }

@@ -4,14 +4,18 @@ import de.structuremade.ms.lessonservice.api.json.CreateLessonJson;
 import de.structuremade.ms.lessonservice.api.json.SetLessonsJson;
 import de.structuremade.ms.lessonservice.util.Converter;
 import de.structuremade.ms.lessonservice.util.JWTUtil;
-import de.structuremade.ms.lessonservice.util.database.entity.*;
-import de.structuremade.ms.lessonservice.util.database.repo.*;
+import de.structuremade.ms.lessonservice.util.database.entity.LessonRoles;
+import de.structuremade.ms.lessonservice.util.database.entity.User;
+import de.structuremade.ms.lessonservice.util.database.repo.LessonRolesRepo;
+import de.structuremade.ms.lessonservice.util.database.repo.SchoolRepo;
+import de.structuremade.ms.lessonservice.util.database.repo.TimeRepo;
+import de.structuremade.ms.lessonservice.util.database.repo.UserRepo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.List;
 
 
 @Service
@@ -32,9 +36,9 @@ public class LessonService {
     Converter converter;
 
 
-    public int create(CreateLessonJson lessonJson, String jwt){
+    public int create(CreateLessonJson lessonJson, String jwt) {
         /*Variables*/
-            LessonRoles lr = new LessonRoles();
+        LessonRoles lr = new LessonRoles();
         /*End of Variables*/
         try {
             LOGGER.info("Initialize Lesson Entity");
@@ -58,37 +62,31 @@ public class LessonService {
                 e.printStackTrace();
                 return 1;
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             LOGGER.error("Create Lesson failed", e.fillInStackTrace());
             return 1;
         }
     }
 
-    public int setToUser(SetLessonsJson slj, String jwt){
+    public int setToUser(SetLessonsJson slj, String jwt) {
         User user;
         try {
             if (jwtUtil.isTokenExpired(jwt)) {
                 LOGGER.info("JWT was expired");
                 return 3;
             }
-            if(slj.getLesson() == null && slj.getLessons() == null || slj.getLesson() != null && slj.getLessons() != null) {
-                return 2;
-            }
             LOGGER.info("Get Lesson and User");
             user = userRepo.getOne(slj.getUser());
             List<LessonRoles> lessonRoles = user.getLessonRoles();
-            if (slj.getLessons() == null) {
-                lessonRoles.add(lessonRolesRepo.getOne(slj.getLesson()));
-            }else {
-                slj.getLessons().forEach(lesson ->{
+            slj.getLessons().forEach(lesson -> {
+                if (lessonRoles.contains(lesson)) {
                     lessonRoles.add(lessonRolesRepo.getOne(lesson));
-                });
-            }
+                }});
             LOGGER.info("Set lesson to user");
             user.setLessonRoles(lessonRoles);
             userRepo.save(user);
             return 0;
-        }catch (Exception e){
+        } catch (Exception e) {
             LOGGER.error("Couldn't set Lesson to User", e.fillInStackTrace());
             return 1;
         }

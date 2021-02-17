@@ -13,7 +13,6 @@ public class SetLessonsJson {
     @NotNull
     private String user;
 
-    private String lesson;
-
+    @NotNull
     private List<String> lessons;
 }
